@@ -46,10 +46,10 @@ class CarsController extends Controller
     {
         $validated = $request->validated();
         
-       $carouselItem = Cars::findOrFail($id);
-       $carouselItem->update($validated);
+       $cars = Cars::findOrFail($id);
+       $cars->update($validated);
 
-        return $carouselItem;
+        return $cars;
     }
 
     /**

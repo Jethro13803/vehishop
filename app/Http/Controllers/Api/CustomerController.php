@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CustomerRequest;
 use App\Models\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class CustomerController extends Controller
 {
@@ -16,20 +18,21 @@ class CustomerController extends Controller
         return User::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CustomerRequest $request)
     {
-        //
+         // Retrieve the validated input data...
+
+         $validated = $request->validated();
+
+         $validated['password'] = Hash::make($validated['password']);
+ 
+         $user = User::create($validated);
+ 
+         return $user;
     }
 
     /**
@@ -37,30 +40,100 @@ class CustomerController extends Controller
      */
     public function show(string $id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
+        return User::findOrFail($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CustomerRequest $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated();
+ 
+        $user->firstname = $validated['firstname'];
+        $user->lastname = $validated['lastname'];
+
+        $user->save();
+
+        return $user;
     }
+
+    /**
+     * Update the email of specified resource in storage.
+     */
+    public function email(CustomerRequest $request, string $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated();
+ 
+        $user->email = $validated['email'];
+        
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * Update the phone nummber of the specified resource in storage.
+     */
+    public function phone_number(CustomerRequest $request, string $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated();
+ 
+        $user->phone_number = $validated['phone_number'];
+
+        $user->save();
+
+        return $user;
+    }
+
+    /**
+     * Update the address of the specified resource in storage.
+     */
+    public function address(CustomerRequest $request, string $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated();
+ 
+        $user->address = $validated['address'];
+
+        $user->save();
+
+        return $user;
+    }
+
+
+    /**
+     * Update the password of the specified resource in storage.
+     */
+    public function password(CustomerRequest $request, string $id)
+    {
+        $user = User::findOrFail($id);
+
+        $validated = $request->validated();
+ 
+        $user->password = Hash::make($validated['password']);
+        
+        $user->save();
+
+        return $user;
+    }
+
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        $branch = User::findOrFail($id);
+        $branch->delete();
+        return $branch;
     }
 }

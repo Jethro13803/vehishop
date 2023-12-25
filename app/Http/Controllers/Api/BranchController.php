@@ -39,4 +39,27 @@ class BranchController extends Controller
         return Branch::findOrFail($id);
     }
 
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(BranchRequest $request, string $id)
+    {
+        $validated = $request->validated();
+        
+       $branch = Branch::findOrFail($id);
+       $branch->update($validated);
+
+        return $branch;
+    }
+
+     /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $branch = Branch::findOrFail($id);
+        $branch->delete();
+        return $branch;
+    }
+
 }
