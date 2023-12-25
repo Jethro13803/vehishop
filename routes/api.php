@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\CustomerController;
@@ -17,38 +18,39 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 //Public API's
+Route::post('/login', [AuthController::class, 'login'])->name('user.login');
+Route::post('/user', [CustomerController::class, 'store'])->name('user.store');
+
 Route::get('/cars', [CarsController::class, 'index']);
 Route::get('/cars/{id}', [CarsController::class, 'show']);
 Route::get('/branch', [BranchController::class, 'index']);
 Route::get('/branch/{id}', [BranchController::class, 'show']);
-Route::post('/user', [CustomerController::class, 'store'])->name('user.store');
 
 
 
-Route::controller(CarsController::class)->group(function () {
-    Route::post('/cars',            'store');
-    Route::put('/cars/{id}',        'update');
-    Route::delete('/cars/{id}',     'destroy');
-});
+Route::middleware(['auth:sanctum'])->group(function () {
 
-Route::controller(BranchController::class)->group(function () {
-    Route::post('/branch',            'store');
-    Route::put('/branch/{id}',        'update');
-    Route::delete('/branch/{id}',     'destroy');
-});
-Route::controller(CustomerController::class)->group(function () {
-    Route::get('/user',                     'index');
-    Route::get('/user/{id}',                'show'); 
-    Route::put('/user/{id}',                'update')->name('user.update');
-    Route::put('/user/email/{id}',          'email')->name('user.email');
-    Route::put('/user/phone/{id}',          'phone_number')->name('user.phone');
-    Route::put('/user/address/{id}',        'address')->name('user.address');
-    Route::put('/user/password/{id}',       'password')->name('user.password');
-    Route::put('/user/image/{id}',          'image')->name('user.image');
-    Route::delete('/user/{id}',             'destroy');
+    Route::controller(CarsController::class)->group(function () {
+        Route::post('/cars',            'store');
+        Route::put('/cars/{id}',        'update');
+        Route::delete('/cars/{id}',     'destroy');
+    });
+
+    Route::controller(BranchController::class)->group(function () {
+        Route::post('/branch',            'store');
+        Route::put('/branch/{id}',        'update');
+        Route::delete('/branch/{id}',     'destroy');
+    });
+    Route::controller(CustomerController::class)->group(function () {
+        Route::get('/user',                     'index');
+        Route::get('/user/{id}',                'show'); 
+        Route::put('/user/{id}',                'update')->name('user.update');
+        Route::put('/user/email/{id}',          'email')->name('user.email');
+        Route::put('/user/phone/{id}',          'phone_number')->name('user.phone');
+        Route::put('/user/address/{id}',        'address')->name('user.address');
+        Route::put('/user/password/{id}',       'password')->name('user.password');
+        Route::put('/user/image/{id}',          'image')->name('user.image');
+        Route::delete('/user/{id}',             'destroy');
+    });
 });
