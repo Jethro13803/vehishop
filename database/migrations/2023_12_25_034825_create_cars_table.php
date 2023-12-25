@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id('carID');
             $table->string('manufacturer');
             $table->string('model');
-            $table->double('price', 8, 2);
+            $table->double('price');
             $table->string('vin', 17);
             $table->string('description');
             $table->string('imageURL');
@@ -23,9 +23,9 @@ return new class extends Migration
         });
 
         Schema::table('cars', function (Blueprint $table) {
-            $table->unsignedBigInteger('branchID');
+            $table->unsignedBigInteger('branch_id');
          
-            $table->foreign('branchID')->references('branchID')->on('branch');
+            $table->foreign('branch_id')->references('branchID')->on('branch');
         });
     }
 

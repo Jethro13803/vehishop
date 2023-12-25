@@ -29,12 +29,12 @@ class Cars extends Model
      * @var array
      */
     protected $fillable = [
-        'branchID',
         'manufacturer',
         'model',
         'price',
         'vin',
         'description',
         'imageURL',
+        'branch_id',
     ];
 }
