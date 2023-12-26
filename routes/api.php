@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,10 +27,11 @@ Route::get('/cars', [CarsController::class, 'index']);
 Route::get('/cars/{id}', [CarsController::class, 'show']);
 Route::get('/branch', [BranchController::class, 'index']);
 Route::get('/branch/{id}', [BranchController::class, 'show']);
+Route::get('/order', [OrderController::class, 'index']);
 
 
 //Private API's
-Route::middleware(['auth:sanctum'])->group(function () {
+//Route::middleware(['auth:sanctum'])->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
 
@@ -58,8 +60,9 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::delete('/user/{id}',             'destroy');
     });
 
-    
-    Route::put('/profile/img', [ProfileController::class, 'image'])->name('profile.image');
-
-    
-});
+    Route::controller(OrderController::class)->group(function () {
+        Route::post('/order',            'store')->name('order.store');
+        Route::put('/order/{id}',        'update')->name('order.update');
+        Route::delete('/order/{id}',     'destroy');
+    });
+//});

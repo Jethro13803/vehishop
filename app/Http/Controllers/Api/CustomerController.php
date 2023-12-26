@@ -152,4 +152,20 @@ class CustomerController extends Controller
 
         return $user;
     }
+
+    public function specificImage(CustomerRequest $request)
+    {
+        
+        $user = User::findOrFail($request->user()->id);
+
+        if(!is_null($user->image))
+        {
+            Storage::disk('public')->delete($user->image);
+        }
+        $user->image = $request->file('image')->storePublicly('images', 'public');
+        
+        $user->save();
+
+        return $user;
+    }
 }
