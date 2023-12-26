@@ -70,9 +70,17 @@ class CustomerRequest extends FormRequest
         {
             return 
             [
-                'password'   => 'required|confirmed|min:8',
+                'password'               => 'required|confirmed|min:8',
             ];
         }
+        else if(request()->routeIs('user.image') || request()->routeIs('profile.image'))
+        {
+            return 
+            [
+                'image'                  => 'required|image|mimes:jpg,bmp,png|max:5000',
+            ];
+        }
+        
         
     
     }

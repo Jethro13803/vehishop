@@ -125,8 +125,6 @@ class CustomerController extends Controller
         return $user;
     }
 
-
-
     /**
      * Remove the specified resource from storage.
      */
@@ -135,5 +133,23 @@ class CustomerController extends Controller
         $branch = User::findOrFail($id);
         $branch->delete();
         return $branch;
+    }
+
+    /**
+     * Update the image of the specified resource from storage.
+     */
+    public function image(CustomerRequest $request, string $id)
+    {
+        $user = User::findOrFail($id);
+
+        if(!is_null($user->image))
+        {
+            Storage::disk('public')->delete($user->image);
+        }
+        $user->image = $request->file('image')->storePublicly('images', 'public');
+        
+        $user->save();
+
+        return $user;
     }
 }
