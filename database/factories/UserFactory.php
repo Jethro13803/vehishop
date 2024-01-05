@@ -23,10 +23,11 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        
         return [
             'firstname' => fake()->firstname(),
             'lastname' => fake()->lastname(),
-           // 'middlename' => fake()->middlename(),
+            'middlename' => fake()->firstname(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' =>now(),
             'phone_number' => fake()->phoneNumber(),

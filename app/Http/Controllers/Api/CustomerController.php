@@ -7,6 +7,7 @@ use App\Http\Requests\CustomerRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\ValidationException;
 
 class CustomerController extends Controller
 {
@@ -54,6 +55,8 @@ class CustomerController extends Controller
  
         $user->firstname = $validated['firstname'];
         $user->lastname = $validated['lastname'];
+        $user->middlename = $validated['middlename'];
+
 
         $user->save();
 
