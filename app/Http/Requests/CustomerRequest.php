@@ -38,6 +38,7 @@ class CustomerRequest extends FormRequest
                 'phone_number'           => 'required|digits_between:11,12|unique:App\Models\User,phone_number',
                 'address'                => 'required|string|max:255',
                 'password'               => 'required|min:8|confirmed',
+                'role'                   => 'nullable|string',
             ];
         }
         else if(request()->routeIs('user.update'))

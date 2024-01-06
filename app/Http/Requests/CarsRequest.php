@@ -21,14 +21,36 @@ class CarsRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'manufacturer' => 'required|string|max:255',
-            'model'    => 'required|string|max:255',
-            'price'   => 'required|numeric',
-            'vin'       => 'required|string|max:17|min:17',
-            'description'   => 'required|string|max:255',
-            'imageURL'       => 'required|string',
-            'branch_id' => 'required|integer'
-        ];
+        if(request()->routeIs('cars.store'))
+        {
+            return [
+                'manufacturer' => 'required|string|max:255',
+                'model'    => 'required|string|max:255',
+                'price'   => 'required|numeric',
+                'vin'       => 'required|string|max:17|min:17',
+                // 'imageURL'       => 'required|image|mimes:jpg,bmp,png|max:2048',
+                'description'   => 'required|string|max:255',
+                'branch_id' => 'required|integer',
+            ];
+        }
+
+        else if(request()->routeIs('cars.update'))
+        {
+            return [
+                'manufacturer' => 'required|string|max:255',
+                 'model'    => 'required|string|max:255',
+                'price'   => 'required|numeric',
+                'vin'       => 'required|string|max:17|min:17',
+                'description'   => 'required|string|max:255',
+            ];
+        }
+
+        else if(request()->routeIs('cars.image'))
+        {
+            return [
+                'imageURL'       => 'required|image|mimes:jpg,bmp,png|max:2048',
+            ];
+        }
+       
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Cars;
 use App\Http\Requests\CarsRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class CarsController extends Controller
@@ -39,18 +40,43 @@ class CarsController extends Controller
         return Cars::findOrFail($id);
     }
 
-    /**
+  /**
      * Update the specified resource in storage.
      */
     public function update(CarsRequest $request, string $id)
     {
+        $user = Cars::findOrFail($id);
+
         $validated = $request->validated();
+ 
+        $user->manufacturer = $validated['manufacturer'];
+        $user->model = $validated['model'];
+        $user->price = $validated['price'];
+        $user->vin = $validated['vin'];
+        $user->description = $validated['description'];
         
-       $cars = Cars::findOrFail($id);
-       $cars->update($validated);
+        $user->save();
+
+        return $user;
+    }
+
+    public function image(CarsRequest $request, string $id)
+    {
+        $cars = Cars::findOrFail($id);
+
+        if(!is_null($cars->imageURL))
+        {
+            Storage::disk('public')->delete($cars->imageURL);
+        }
+        
+        $cars->imageURL = $request->file('imageURL')->storePublicly('images', 'public');
+        
+        $cars->save();
 
         return $cars;
     }
+
+    
 
     /**
      * Remove the specified resource from storage.

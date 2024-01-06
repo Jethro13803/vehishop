@@ -18,7 +18,7 @@ return new class extends Migration
             $table->double('price');
             $table->string('vin', 17);
             $table->string('description');
-            $table->string('imageURL');
+            $table->string('imageURL')->nullable();
             $table->timestamps();
         });
 

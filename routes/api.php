@@ -37,9 +37,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     //Admin API's
     Route::controller(CarsController::class)->group(function () {
-        Route::post('/cars',            'store');
-        Route::put('/cars/{id}',        'update');
-        Route::delete('/cars/{id}',     'destroy');
+        Route::post('/cars',                  'store')->name('cars.store');
+        Route::put('/cars/{id}',              'update')->name('cars.update');
+        Route::put('/cars/image/{id}',        'image')->name('cars.image');
+        Route::delete('/cars/{id}',           'destroy');
     });
 
     Route::controller(BranchController::class)->group(function () {
@@ -59,6 +60,13 @@ Route::middleware(['auth:sanctum'])->group(function () {
         Route::put('/user/image/{id}',          'image')->name('user.image');
         Route::delete('/user/{id}',             'destroy');
     });
+
+    //User specific
+    Route::controller(ProfileController::class)->group(function () {
+        Route::get('/profile/show',                     'show');
+        Route::put('/profile/image',                     'image')->name('profile.image');
+    });
+
 
     // Route::controller(OrderController::class)->group(function () {
     //     Route::get('/order',             'index');
