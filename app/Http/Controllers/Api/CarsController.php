@@ -27,9 +27,16 @@ class CarsController extends Controller
 
         $validated = $request->validated();
 
+        $validated['imageURL'] = $request->file('imageURL')->storePublicly('cars', 'public');
+        
+
         $cars = Cars::create($validated);
 
+
         return $cars;
+
+
+
     }
 
     /**
@@ -69,7 +76,7 @@ class CarsController extends Controller
             Storage::disk('public')->delete($cars->imageURL);
         }
         
-        $cars->imageURL = $request->file('imageURL')->storePublicly('images', 'public');
+        $cars->imageURL = $request->file('imageURL')->storePublicly('cars', 'public');
         
         $cars->save();
 
@@ -84,6 +91,12 @@ class CarsController extends Controller
     public function destroy(string $id)
     {
         $cars = Cars::findOrFail($id);
+
+        if(!is_null($cars->imageURL))
+        {
+            Storage::disk('public')->delete($cars->imageURL);
+        }
+
         $cars->delete();
         return $cars;
     }

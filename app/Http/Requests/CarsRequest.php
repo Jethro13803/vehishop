@@ -24,13 +24,13 @@ class CarsRequest extends FormRequest
         if(request()->routeIs('cars.store'))
         {
             return [
-                'manufacturer' => 'required|string|max:255',
-                'model'    => 'required|string|max:255',
-                'price'   => 'required|numeric',
-                'vin'       => 'required|string|max:17|min:17',
-                // 'imageURL'       => 'required|image|mimes:jpg,bmp,png|max:2048',
-                'description'   => 'required|string|max:255',
-                'branch_id' => 'required|integer',
+                'manufacturer'      => 'required|string|max:255',
+                'model'             => 'required|string|max:255',
+                'price'             => 'required|numeric',
+                'vin'               => 'required|string|max:17|min:17',
+                'imageURL'          => 'required|image|unique:App\Models\Cars,imageURL|mimes:jpg,gif,png|max:2048',
+                'description'       => 'required|string|max:255',
+                'branch_id'         => 'required|integer',
             ];
         }
 
@@ -38,17 +38,18 @@ class CarsRequest extends FormRequest
         {
             return [
                 'manufacturer' => 'required|string|max:255',
-                 'model'    => 'required|string|max:255',
+                'model'    => 'required|string|max:255',
                 'price'   => 'required|numeric',
                 'vin'       => 'required|string|max:17|min:17',
                 'description'   => 'required|string|max:255',
+
             ];
         }
 
         else if(request()->routeIs('cars.image'))
         {
             return [
-                'imageURL'       => 'required|image|mimes:jpg,bmp,png|max:2048',
+                'imageURL'       => 'required|image|mimes:jpg,gif,png|max:2048',
             ];
         }
        

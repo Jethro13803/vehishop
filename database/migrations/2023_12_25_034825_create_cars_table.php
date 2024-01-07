@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string('manufacturer');
             $table->string('model');
             $table->double('price');
-            $table->string('vin', 17);
+            $table->string('vin', 17)->unique();
             $table->string('description');
-            $table->string('imageURL')->nullable();
+            $table->string('imageURL');
             $table->timestamps();
         });
 
