@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BranchController;
 use App\Http\Controllers\Api\CarsController;
 use App\Http\Controllers\Api\CarSpecificController;
+use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderDetailsController;
@@ -74,6 +75,12 @@ Route::middleware(['auth:sanctum'])->group(function () {
         //Route::put('/profile/image',                     'image')->name('profile.image');
     });
 
+    Route::controller(ContactController::class)->group(function () {
+        Route::get('/contact',                     'index');
+        Route::get('/contact/{id}',                'show'); 
+        Route::post('/contact',                       'store');
+
+    });
 
     // Route::controller(OrderController::class)->group(function () {
     //     Route::get('/order',             'index');
