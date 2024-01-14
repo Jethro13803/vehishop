@@ -27,7 +27,7 @@ class OrderRequest extends FormRequest
         if(request()->routeIs('order.store'))
         {
             return [
-                'date'              => 'date_format:Y-m-d',
+                // 'date'              => 'date_format:Y-m-d',
                 'status'            => 'required|string',
                 'quantity'          => 'required|numeric',
                 'sales_total'       => 'required|numeric',

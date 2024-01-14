@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ContactController;
 use App\Http\Controllers\Api\CustomerController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Controllers\Api\OrderDetailsController;
+use App\Http\Controllers\Api\OrdersController;
 use App\Http\Controllers\Api\ProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -82,14 +83,18 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
     });
 
-    // Route::controller(OrderController::class)->group(function () {
-    //     Route::get('/order',             'index');
-    //     Route::post('/order',            'store')->name('order.store');
-    //     Route::put('/order/{id}',        'update')->name('order.update');
-    //     Route::delete('/order/{id}',     'destroy');
-    // });
+    Route::controller(OrdersController::class)->group(function () {
+        Route::get('/order',             'index');
+        Route::get('/order/{id}',         'show');
+        Route::post('/order',            'store')->name('order.store');
+        Route::put('/order/{id}',        'update')->name('order.update');
+        Route::delete('/order/{id}',     'destroy');
+    });
 
-    // Route::controller(OrderDetailsController::class)->group(function () {
-    //     Route::get('/details',             'index');
-    // });
+    Route::controller(OrderDetailsController::class)->group(function () {
+        Route::get('/details',             'index');
+        Route::get('/details/{id}',         'show');
+        Route::post('/details',            'store');
+    });
+   
 });

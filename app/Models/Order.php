@@ -29,21 +29,12 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
-        'date',
+        // 'date',
         'status',
         'quantity',
         'sales_total',
         'payment_method',
         'customerID',
         'branchID',
-    ];
-
-     /**
-     * The attributes that should be cast.
-     *
-     * @var array<string, string>
-     */
-    protected $casts = [
-        'date' => 'datetime',
     ];
 }

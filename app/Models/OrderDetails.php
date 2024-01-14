@@ -29,7 +29,9 @@ class OrderDetails extends Model
      * @var array
      */
     protected $fillable = [
+        'quantity',
+        'total_price',
+        'orderID',
         'carID',
-        'orderD',
     ];
 }

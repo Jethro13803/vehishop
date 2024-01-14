@@ -13,8 +13,7 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id('orderID');
-            $table->timestamp('date');
-            $table->enum('status', ['Fully Paid', 'Partially Paid']);
+            $table->enum('status', ['Full payment', 'Partial Payment']);
             $table->integer('quantity');
             $table->double('sales_total');
             $table->string('payment_method');

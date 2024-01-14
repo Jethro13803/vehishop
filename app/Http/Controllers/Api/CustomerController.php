@@ -133,9 +133,9 @@ class CustomerController extends Controller
      */
     public function destroy(string $id)
     {
-        $branch = User::findOrFail($id);
-        $branch->delete();
-        return $branch;
+        $user = User::findOrFail($id);
+        $user->delete();
+        return $user;
     }
 
     /**

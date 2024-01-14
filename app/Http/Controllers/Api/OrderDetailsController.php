@@ -3,32 +3,32 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ContactRequest;
-use App\Models\Contact;
+use App\Http\Requests\OrderDetailsRequest;
+use App\Models\OrderDetails;
 use Illuminate\Http\Request;
 
-class ContactController extends Controller
+class OrderDetailsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return Contact::all();
+        return OrderDetails::all();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ContactRequest $request)
+    public function store(OrderDetailsRequest $request)
     {
         // Retrieve the validated input data...
 
         $validated = $request->validated();
 
-        $contact = Contact::create($validated);
+        $order_details = OrderDetails::create($validated);
 
-        return $contact;
+        return $order_details;
     }
 
     /**
@@ -36,14 +36,6 @@ class ContactController extends Controller
      */
     public function show(string $id)
     {
-        return Contact::findOrFail($id);
+        return OrderDetails::findOrFail($id);
     }
-
-    public function destroy(string $id)
-    {
-        $user = Contact::findOrFail($id);
-        $user->delete();
-        return $user;
-    }
-    
 }
