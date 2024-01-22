@@ -32,9 +32,8 @@ class Order extends Model
         // 'date',
         'status',
         'quantity',
-        'sales_total',
         'payment_method',
         'customerID',
-        'branchID',
+        'carID',
     ];
 }

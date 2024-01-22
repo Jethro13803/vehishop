@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Cars;
 use App\Http\Requests\CarsRequest;
 use App\Http\Controllers\Controller;
+use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
@@ -13,9 +14,24 @@ class CarsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Cars::all();
+        // //show data on who's logged in
+        //$cars = Cars::where('customerID', $request->user()->carID);
+        
+        // if($request->keyword){
+        //     $cars->where(function ($query) use ($request){
+        //         $query->where('manufacturer', 'like', '%' . $request->keyword . '%')
+        //             ->orWhere('model', 'like', '%' . $request->keyword . '%')
+        //             ->orWhere('price', 'like', '%' . $request->keyword . '%');
+        //     }); 
+                  
+        // }
+
+       // return $cars->paginate(2);
+                    
+       $cars = Cars::all();
+       return $cars;
     }
 
     /**
@@ -52,19 +68,20 @@ class CarsController extends Controller
      */
     public function update(CarsRequest $request, string $id)
     {
-        $user = Cars::findOrFail($id);
+       $validated = $request -> validated();
+       $cars = Cars::findOrFail($id);
 
-        $validated = $request->validated();
- 
-        $user->manufacturer = $validated['manufacturer'];
-        $user->model = $validated['model'];
-        $user->price = $validated['price'];
-        $user->vin = $validated['vin'];
-        $user->description = $validated['description'];
+       if(!is_null($cars->imageURL))
+        {
+            Storage::disk('public')->delete($cars->imageURL);
+        }
         
-        $user->save();
+    $cars->imageURL = $request->file('imageURL')->storePublicly('cars', 'public');
 
-        return $user;
+       $cars -> update($validated);
+
+
+        return $cars;
     }
 
     public function image(CarsRequest $request, string $id)

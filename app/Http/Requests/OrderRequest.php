@@ -30,10 +30,9 @@ class OrderRequest extends FormRequest
                 // 'date'              => 'date_format:Y-m-d',
                 'status'            => 'required|string',
                 'quantity'          => 'required|numeric',
-                'sales_total'       => 'required|numeric',
                 'payment_method'    => 'required|string|max:255',
                 'customerID'        => 'required|integer',
-                'branchID'          => 'required|integer',
+                'carID'             => 'required|integer',
             ];
         }
         else if(request()->routeIs('order.update'))

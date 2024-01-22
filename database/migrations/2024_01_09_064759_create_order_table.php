@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('order', function (Blueprint $table) {
             $table->id('orderID');
-            $table->enum('status', ['Full payment', 'Partial Payment']);
+            $table->string('status');
             $table->integer('quantity');
-            $table->double('sales_total');
             $table->string('payment_method');
             $table->timestamps();
         });
@@ -25,9 +24,9 @@ return new class extends Migration
 
             $table->foreign('customerID')->references('customerID')->on('users');
 
-            $table->unsignedBigInteger('branchID');
+            $table->unsignedBigInteger('carID');
          
-            $table->foreign('branchID')->references('branchID')->on('branch');
+            $table->foreign('carID')->references('carID')->on('cars');
         });
     }
 
